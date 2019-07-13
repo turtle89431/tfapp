@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>DeskGap API Demo</title>
+		<link rel="stylesheet" href="app.css" />
+		<script type="text/javascript">
+			var asyncNode = window.deskgap.asyncNode;
+			var messageUI = window.deskgap.messageUI;
+			messageUI.on('hello-from-node', (e, mess) => {
+				document.querySelector('#test').innerHTML = `<ul>${mess.split(',').map(x => `<li>${x}</li>`)}</ul>`;
+			});
+		</script>
+	</head>
+	<body>
+		this is a <span id="test">no</span>
+		<script>
+			messageUI.send('hello-to-node', 'yes');
+		</script>
+	</body>
+</html>
