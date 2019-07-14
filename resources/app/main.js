@@ -10,9 +10,14 @@ ipcMain.on('hello-to-node', (e, message) => {
 	});
 	e.sender.send('hello-from-node', `${list.join(',')}`);
 });
-ipcMain.on('tf', (evt, arg) => {
-    let polyr = new pr([0, 1], [[0, 0], [1, 0], [0, 1], [1, 1]], [[0], [1], [1], [0]]);
-    polyr.train
+ipcMain.on('tf',(evt, arg) => {
+    console.log("wait")
+    let tmp =async ()=>{
+        await pr.load("./my-model/model.json")
+        let n = await pr.predict(arg)
+        evt.sender.send("fromtf",n)
+    }
+    tmp()
 });
 let mainWindow;
 
@@ -21,8 +26,9 @@ app.once('ready', () => {
 		show: false,
 		width: 800,
 		height: 600,
-	}).once('ready-to-show', () => {
-		mainWindow.show();
+	}).once('ready-to-show', async () => {
+        
+        mainWindow.show();
 	});
 
 	if (process.platform !== 'win32') {

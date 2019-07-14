@@ -11,13 +11,21 @@
 			var messageUI = window.deskgap.messageUI;
 			messageUI.on('hello-from-node', (e, mess) => {
 				document.querySelector('#test').innerHTML = `<ul>${mess.split(',').map(x => `<li>${x}</li>`)}</ul>`;
+            });
+            messageUI.on('fromtf', (e, mess) => {
+				document.querySelector('#tf').innerHTML = `${mess}`;
 			});
 		</script>
 	</head>
-	<body>
-		this is a <span id="test">no</span>
+	<body> <p id="tf">loading</p>
+        this is a <span id="test">no</span>
+       <button onclick="btnpush()">push me</button>
 		<script>
-			messageUI.send('hello-to-node', 'yes');
+            messageUI.send('hello-to-node', 'yes');
+            messageUI.send("tf",[2,1,1])
+            function btnpush(){
+                messageUI.send("tf",[2,0,2])
+            }
 		</script>
 	</body>
 </html>
